@@ -19,8 +19,7 @@ void createNode(struct node* t)
     else
     {
         temp->x=y;
-        t->left=temp;
-        create(temp);
+        create(temp->left);
     }
     printf("Enter data");
     scanf("%d",&y);
@@ -32,8 +31,7 @@ void createNode(struct node* t)
     else
     {   
         temp2->data=y;
-        t->right=temp2;
-        create(temp2);
+        create(temp2->right);
     }
 }
 void Inorder(struct node*p)  // left root right
@@ -70,8 +68,6 @@ int main()
    createNode(head);
    struct node*q=head;
    Inorder(q);
-   q=head;
    Postorder(q);
-   q=head;
    Preorder(q);
 }
