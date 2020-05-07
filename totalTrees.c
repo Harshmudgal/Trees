@@ -1,74 +1,58 @@
 #include<stdio.h>
 #include<stdlib.h>
-struct node
-{
+struct node{
     int data;
     struct node*left;
     struct node*right;
 }*head;
-void createNode(struct node* t)
+struct node *createnode()
 {
-    int y;
-    printf("Enter the element in inorder sequence");
-    t=(struct node*)malloc(sizeof(struct node));
-    scanf("%d",&y);
-    if(y==-1)
-    {
-        t->left=NULL;    
-        return; 
-    }
-    else
-    {
-        t->left->data=y;
-        create(t->left);
-    }
-    printf("Enter data");
-    scanf("%d",&y);
-    if(y==-1)
-    {
-        t->right=NULL;
-    }
-    else
-    {   
-        create(t->right);
-    }
+    struct node *p;
+    int x;
+    //printf("Enter data(-1 for no node):");
+    scanf("%d",&x);
+    if(x==-1)
+	return NULL;
+    p=(struct node*)malloc(sizeof(struct node));
+    p->data=x;
+    printf("Enter left child of %d:\n",x);
+    p->left=createnode();
+    printf("Enter right child of %d:\n",x);
+    p->right=createnode();
+    return p;
 }
-void Inorder(struct node*p)  // left root right
+void inorder(struct node*p)
 {
-    if(p)
+    if(p!=NULL)
     {
-    Inorder(p->left);
-    printf("%d",p->data);
-    Inorder(p->right);
-    }
+        traverse(p->left);
+        printf("%d ,",p->data);
+        traverse(p->right);
+    }    
 }
-void Postorder(struct node*p) //left right root
+void postorder(struct node*p)
 {
-    if(p)
+    if(p!=NULL)
     {
-    Inorder(p->left);
-    Inorder(p->right);
-    printf("%d",p->data);
-    }
+        traverse(p->left);
+        traverse(p->right);
+        printf("%d ,",p->data);
+    }    
 }
-void Preorder(struct node*p) //root left right
+void preorder(struct node*p)
 {
-    if(p)
+    if(p!=NULL)
     {
-    printf("%d",p->data);
-    Inorder(p->left);
-    Inorder(p->right);
-    }
+        printf("%d ,",p->data);
+        traverse(p->left);
+        traverse(p->right);
+    }    
 }
 int main()
 {
-   printf("Enter root element");
-   scanf("%d",head->x);
-   createNode(head);
-   struct node*q=head;
-   Inorder(q);
-   q=head;
-   Postorder(q);
-   q=head;
-   Preorder(q);
+    printf("Enter first node");
+    head=createnode();
+    inorder(head);
+    preorder(head);
+    postorder(head);
 }
