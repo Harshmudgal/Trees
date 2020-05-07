@@ -1,60 +1,81 @@
 #include<stdio.h>
 #include<stdlib.h>
-struct node
-{
+struct node{
     int data;
     struct node*left;
     struct node*right;
 }*head;
-void createNode(struct node* t)
+struct node *createnode()
 {
-    int y;
-    printf("Enter the element in inorder sequence");
-    t=(struct node*)malloc(sizeof(struct node));
-    scanf("%d",&y);
-    if(y==-1)
-    {
-        t->left=NULL;    
-        return; 
-    }
-    else
-    {
-        t->left->data=y;
-        create(t->left);
-    }
-    printf("Enter data");
-    scanf("%d",&y);
-    if(y==-1)
-    {
-        t->right=NULL;
-    }
-    else
-    {   
-        create(t->right);
-    }
+    struct node *p;
+    int x;
+    //printf("Enter data(-1 for no node):");
+    scanf("%d",&x);
+    if(x==-1)
+	return NULL;
+    p=(struct node*)malloc(sizeof(struct node));
+    p->data=x;
+    printf("Enter left child of %d:\n",x);
+    p->left=createnode();
+    printf("Enter right child of %d:\n",x);
+    p->right=createnode();
+    return p;
 }
-int height(struct node*t)
+void inorder(struct node*p)
 {
-    if(t=="NULL")
+    if(p!=NULL)
+    {
+        traverse(p->left);
+        printf("%d ,",p->data);
+        traverse(p->right);
+    }    
+}
+void postorder(struct node*p)
+{
+    if(p!=NULL)
+    {
+        traverse(p->left);
+        traverse(p->right);
+        printf("%d ,",p->data);
+    }    
+}
+void preorder(struct node*p)
+{
+    if(p!=NULL)
+    {
+        printf("%d ,",p->data);
+        traverse(p->left);
+        traverse(p->right);
+    }    
+}
+int height(struct node* p)
+{
+    if(p==NULL)
     return 0;
-    int a=height(t->left);
-    int b=height(t->right);
-    return 1+(a>=b)?a:b;
+    if(p->left==NULL&&p->right==NULL)
+    return 0;
+    int a=height(p->right);
+    int b=height(p->left);
+    return 1+(a>b?a:b);
 }
-int totNodes(struct node* t)
+int nodes(struct node*p)
 {
-    if(t=="NULL")
+    if(p==NULL)
+    return 0;
+    if(p->left==NULL&&p->right==NULL)
     return 1;
-    int a=totNodes(t->left);
-    int b=totNodes(t->right);
-    return 1+a+b;
+    int a=nodes(p->left);
+    int b=nodes(p->right);
+    return 1+a+b;    
 }
 int main()
 {
-   printf("Enter root element");
-   scanf("%d",head->x);
-   createNode(head);
-   struct node*q=head;
-   int h=height(q);
-    int nodes=totNodes(q);
+    printf("Enter first node");
+    head=createnode();
+    inorder(head);
+    preorder(head);
+    postorder(head);
+    // int h=height(head);
+    //int n=nodes(head);
+    //printf("\n %d,%d",h,n);
 }
