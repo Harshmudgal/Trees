@@ -14,11 +14,12 @@ void createNode(struct node* t)
     scanf("%d",&y);
     if(y==-1)
     {
-        t->left=NULL;     
+        t->left=NULL;    
+        return; 
     }
     else
     {
-        t->data=y;
+        t->left->data=y;
         create(t->left);
     }
     printf("Enter data");
